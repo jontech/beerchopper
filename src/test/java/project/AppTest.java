@@ -20,4 +20,13 @@ public class AppTest {
         assertEquals(3, trans[0].length);
         assertEquals(1.1, trans[0][0], 0.001);
     }
+
+    @Test public void testGeoLocationDistance() {
+        Double[] pointA = {30.223400115966797, -97.76969909667969};
+        Double[] pointB = {37.782501220703125, -122.39299774169922};
+
+        Double res = app.getDistFunction().apply(pointA).apply(pointB);
+
+        assertEquals(2411.58784, res, 0.001);
+    }
 }
