@@ -28,9 +28,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+
+    compile files('lib/com.google.ortools.jar')
+    compile files('lib/protobuf.jar')
 }
 
 application {
     // Define the main class for the application.
     mainClassName = 'project.App'
+    applicationDefaultJvmArgs = ["-Djava.library.path=lib"]
 }
