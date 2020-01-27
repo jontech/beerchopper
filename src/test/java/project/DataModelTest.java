@@ -12,19 +12,19 @@ public class DataModelTest {
         geoLocations.add(new Double[] {37.782501220703125, -122.39299774169922});
         geoLocations.add(new Double[] {50.76679992675781, 4.30810022354126});
 
-        Double[][] transMat = DataModel.makeTransitionMatrix(geoLocations, pointA -> pointB -> 1.1);
+        Long[][] transMat = DataModel.makeTransitionMatrix(geoLocations, pointA -> pointB -> 1L);
 
         assertEquals(3, transMat.length);
         assertEquals(3, transMat[0].length);
-        assertEquals(1.1, transMat[0][0], 0.001);
+        assertEquals(1L, transMat[0][0], 0);
     }
 
     @Test public void testGeoLocationDistance() {
         Double[] pointA = {30.223400115966797, -97.76969909667969};
         Double[] pointB = {37.782501220703125, -122.39299774169922};
 
-        Double res = DataModel.getDistFunction().apply(pointA).apply(pointB);
+        long res = DataModel.getDistFunction().apply(pointA).apply(pointB);
 
-        assertEquals(2411.58784, res, 0.001);
+        assertEquals(2411, res, 0);
     }
 }
