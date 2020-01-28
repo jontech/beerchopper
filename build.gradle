@@ -41,6 +41,10 @@ application {
     applicationDefaultJvmArgs = ["-Djava.library.path=lib"]
 }
 
+test {
+    systemProperty 'java.library.path', 'lib'
+}
+
 flyway {
     url = 'jdbc:mysql://db/beerchopper'
     user = 'root'
