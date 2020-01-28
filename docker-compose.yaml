@@ -16,6 +16,7 @@ services:
     restart: always
     volumes:
     - ./mysql/conf.d:/etc/mysql/conf.d
+    - ./data:/var/lib/mysql/data
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: beerchopper

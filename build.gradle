@@ -12,6 +12,8 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+
+    id "org.flywaydb.flyway" version "6.2.0"
 }
 
 repositories {
@@ -37,4 +39,10 @@ application {
     // Define the main class for the application.
     mainClassName = 'project.App'
     applicationDefaultJvmArgs = ["-Djava.library.path=lib"]
+}
+
+flyway {
+    url = 'jdbc:mysql://db/beerchopper'
+    user = 'root'
+    password = '123'
 }
