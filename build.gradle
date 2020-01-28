@@ -46,3 +46,13 @@ flyway {
     user = 'root'
     password = '123'
 }
+
+tasks.register("download") {
+    doLast {
+           def proc = "wget -nv -P data https://raw.githubusercontent.com/brewdega/open-beer-database-dumps/master/dumps/geocodes.csv".execute()
+           proc.waitFor()
+           if (proc.exitValue() == 0) {
+              println "OK"
+           }
+    }
+}
