@@ -6,7 +6,7 @@ services:
     volumes:
     - .:/home/gradle/project
     working_dir: /home/gradle/project
-    command: gradle -t test
+    command: gradle -t test -i
 
   app:
     image: gradle
