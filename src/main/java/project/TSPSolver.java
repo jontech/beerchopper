@@ -13,7 +13,8 @@ class TSPSolver {
     }
 
     public static TSPResult solve(DataModel data) {
-        RoutingIndexManager manager = new RoutingIndexManager(data.transMat.length, data.vehicleNumber, data.depot);
+        RoutingIndexManager manager =
+            new RoutingIndexManager(data.transMat.length, data.vehicleNumber, data.starts, data.ends);
         RoutingModel routing = new RoutingModel(manager);
 
         final int transitCallbackIndex =

@@ -7,6 +7,8 @@ import java.util.List;
 class DataModel {
     public final int vehicleNumber = 1;
     public final int depot = 0;
+    public final int[] starts = {1};
+    public final int[] ends = {1};
     public Long[][] transMat = null;
     
     public DataModel(List<Double[]> geoLocations) {
