@@ -17,10 +17,6 @@ import com.google.ortools.constraintsolver.main;
 import java.util.logging.Logger;
 
 public class App {
-    static {
-        System.loadLibrary("jniortools");
-    }
-
     private static final Logger logger = Logger.getLogger(App.class.getName());
     
     public static void main(String[] args) {
@@ -44,48 +40,25 @@ public class App {
         }
 
         final DataModel data = new DataModel(geoLocations);
-
-        RoutingIndexManager manager =
-            new RoutingIndexManager(data.transMat.length, data.vehicleNumber, data.depot);
-
-        RoutingModel routing = new RoutingModel(manager);
-
-        final int transitCallbackIndex =
-            routing.registerTransitCallback((long fromIndex, long toIndex) -> {
-                    // Convert from routing variable Index to user NodeIndex.
-                    int fromNode = manager.indexToNode(fromIndex);
-                    int toNode = manager.indexToNode(toIndex);
-                    return data.transMat[fromNode][toNode];
-                });
-
-        routing.setArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
-
-        RoutingSearchParameters searchParameters =
-            main.defaultRoutingSearchParameters()
-            .toBuilder()
-            .setFirstSolutionStrategy(FirstSolutionStrategy.Value.PATH_CHEAPEST_ARC)
-            .build();
-
-        Assignment solution = routing.solveWithParameters(searchParameters);
-
-        printSolution(routing, manager, solution);
+        TSPResult res = TSPSolver.solve(data);
+        printSolution(res);
     }
 
-    static void printSolution(RoutingModel routing, RoutingIndexManager manager, Assignment solution) {
+    static void printSolution(TSPResult res) {
         // Solution cost.
-        logger.info("Objective: " + solution.objectiveValue() + "miles");
+        logger.info("Objective: " + res.solution.objectiveValue() + "km");
         // Inspect solution.
         logger.info("Route:");
         long routeDistance = 0;
         String route = "";
-        long index = routing.start(0);
-        while (!routing.isEnd(index)) {
-            route += manager.indexToNode(index) + " -> ";
+        long index = res.routing.start(0);
+        while (!res.routing.isEnd(index)) {
+            route += res.manager.indexToNode(index) + " -> ";
             long previousIndex = index;
-            index = solution.value(routing.nextVar(index));
-            routeDistance += routing.getArcCostForVehicle(previousIndex, index, 0);
+            index = res.solution.value(res.routing.nextVar(index));
+            routeDistance += res.routing.getArcCostForVehicle(previousIndex, index, 0);
         }
-        route += manager.indexToNode(routing.end(0));
+        route += res.manager.indexToNode(res.routing.end(0));
         logger.info(route);
         logger.info("Route distance: " + routeDistance + "km");
     }    

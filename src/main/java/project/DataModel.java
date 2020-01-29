@@ -13,6 +13,10 @@ class DataModel {
         this.transMat = this.makeTransitionMatrix(geoLocations, this.getDistFunction());        
     }
 
+    public DataModel(Long[][] transMat) {
+        this.transMat = transMat;
+    }
+
     public static Function<Double[], Function<Double[], Long>> getDistFunction() {
         return pointA -> pointB -> {
             Function<Double, Double> toRad = a -> a * Math.PI / 180;
