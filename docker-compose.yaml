@@ -1,13 +1,6 @@
 version: '3'
 
 services:
-  test:
-    image: gradle
-    volumes:
-    - .:/home/gradle/project
-    working_dir: /home/gradle/project
-    command: gradle -t test -i
-
   app:
     image: gradle
     depends_on:
@@ -23,7 +16,7 @@ services:
     restart: always
     volumes:
     - ./mysql/conf.d:/etc/mysql/conf.d
-    - ./data:/var/lib/mysql/data
+    - ./data:/opt/mysql/data
     environment:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: beerchopper

@@ -51,7 +51,7 @@ flyway {
     password = '123'
 }
 
-tasks.register("setup") {
+tasks.register("download") {
     def download = { url ->
            def proc = "wget -nv -P data ${url}".execute()
            proc.waitFor()
