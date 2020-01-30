@@ -11,7 +11,7 @@ class DataModel {
     public final int[] ends = {1};
     public Long[][] transMat = null;
     
-    public DataModel(List<Double[]> geoLocations) {
+    public DataModel(List<GeoLocation> geoLocations) {
         this.transMat = this.makeTransitionMatrix(geoLocations, this.getDistFunction());        
     }
 
@@ -36,13 +36,15 @@ class DataModel {
         };
     }
 
-    public static Long[][] makeTransitionMatrix(List<Double[]> geoLocations,
-                                              Function<Double[], Function<Double[], Long>> distFn) {
+    public static Long[][] makeTransitionMatrix(List<GeoLocation> geoLocations,
+                                                Function<Double[], Function<Double[], Long>> distFn) {
         int n = geoLocations.size();
         Long[][] mat = new Long[n][n];
         for (int i=0; i < n; i++) {
             for (int j=0; j < n; j++) {
-                mat[i][j] = distFn.apply(geoLocations.get(i)).apply(geoLocations.get(j));
+                mat[i][j] = distFn
+                    .apply(geoLocations.get(i).getLocation())
+                    .apply(geoLocations.get(j).getLocation());
             }
         }
         return mat;
