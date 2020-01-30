@@ -11,7 +11,7 @@ class GeoLocation {
         this.longitude = longitude;
     }
 
-    public Double[] getLocation() {
+    public Double[] getCoord() {
         return new Double[] { this.latitude, this.longitude };
     }
 }

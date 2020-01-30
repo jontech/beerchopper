@@ -20,7 +20,20 @@ class DB {
         this.conn = DriverManager.getConnection(url);
     }
 
-    public <T> List<T> query(String q, Function<ResultSet, T> unpackFn) {
+    public List<GeoLocation> getGeoLocations() {
+        return this.query("SELECT * FROM geo_location",
+                 rs -> {
+                     try {
+                         return new GeoLocation(rs.getInt("id"),
+                                                Double.parseDouble(rs.getString("latitude")), 
+                                                Double.parseDouble(rs.getString("longitude")));
+                     } catch (SQLException e) {
+                         throw new RuntimeException(e);
+                     }
+                 });
+    }
+
+    private <T> List<T> query(String q, Function<ResultSet, T> unpackFn) {
         Statement stmt = null;
         ResultSet rs = null;
         List<T> result = new ArrayList<>();

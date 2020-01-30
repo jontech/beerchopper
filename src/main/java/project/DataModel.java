@@ -43,8 +43,8 @@ class DataModel {
         for (int i=0; i < n; i++) {
             for (int j=0; j < n; j++) {
                 mat[i][j] = distFn
-                    .apply(geoLocations.get(i).getLocation())
-                    .apply(geoLocations.get(j).getLocation());
+                    .apply(geoLocations.get(i).getCoord())
+                    .apply(geoLocations.get(j).getCoord());
             }
         }
         return mat;

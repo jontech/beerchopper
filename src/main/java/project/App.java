@@ -11,18 +11,7 @@ public class App {
     
     public static void main(String[] args) throws SQLException {
         final DB db = new DB("jdbc:mysql://db/beerchopper?user=root&password=123");
-        final List<GeoLocation> geoLocations =
-            db.query("SELECT * FROM geo_location",
-                     rs -> {
-                         try {
-                             return new GeoLocation(rs.getInt("id"),
-                                                    Double.parseDouble(rs.getString("latitude")), 
-                                                    Double.parseDouble(rs.getString("longitude")));
-                         } catch (SQLException e) {
-                             throw new RuntimeException(e);
-                         }
-                     });
-
+        final List<GeoLocation> geoLocations = db.getGeoLocations();
         final DataModel data = new DataModel(geoLocations);
         final TSPResult res = TSPSolver.solve(data);
         printSolution(res);
