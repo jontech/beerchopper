@@ -53,13 +53,18 @@ flyway {
 
 tasks.register("download") {
     def download = { url ->
-           def proc = "wget -nv -P data ${url}".execute()
+           def proc = "wget -nc -P data ${url}".execute()
            proc.waitFor()
            proc.exitValue()
     }
 
     doLast {
-           if (download('https://raw.githubusercontent.com/brewdega/open-beer-database-dumps/master/dumps/geocodes.csv') == 0) {
+           def ok = [
+               download('https://raw.githubusercontent.com/brewdega/open-beer-database-dumps/master/dumps/geocodes.csv'),
+               download('https://raw.githubusercontent.com/brewdega/open-beer-database-dumps/master/dumps/breweries.csv')
+           ].every { it == 0 }
+
+           if (ok) {
               println('OK')
            }
     }
