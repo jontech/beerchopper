@@ -9,7 +9,8 @@ import java.util.logging.Logger;
 import java.util.function.Function;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 class DB {
     private Connection conn = null;
@@ -33,6 +34,22 @@ class DB {
                  });
     }
 
+    public List<Brewery> getBreweries(Integer[] ids) {
+        String joined =
+            Arrays.stream(ids).map(Object::toString).collect(Collectors.joining(","));
+
+        return this.query(String.format("SELECT * FROM brewery WHERE id IN (%s)", joined),
+                 rs -> {
+                     try {
+                         return new Brewery(rs.getInt("id"),
+                                            rs.getString("name"),
+                                            rs.getString("country"));
+                     } catch (SQLException e) {
+                         throw new RuntimeException(e);
+                     }
+                 });
+    }
+    
     private <T> List<T> query(String q, Function<ResultSet, T> unpackFn) {
         Statement stmt = null;
         ResultSet rs = null;
