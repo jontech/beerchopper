@@ -6,3 +6,5 @@ build
 
 # Ignore side libraries directory
 lib
+
+TAGS
