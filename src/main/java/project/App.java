@@ -24,7 +24,11 @@ public class App {
             .collect(Collectors.toList());
 
         List<Brewery> breweries = db.getBreweries(ids);
+        printVisitedBreweries(breweries);
+    }
 
-        breweries.stream().map(b -> b.name).forEach(logger::info);
+    public static void printVisitedBreweries(List<Brewery> breweries) {
+        String joined = breweries.stream().map(b -> b.name).collect(Collectors.joining(" -> "));
+        logger.info(joined);
     }
 }
