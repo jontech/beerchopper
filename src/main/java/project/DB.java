@@ -34,9 +34,9 @@ class DB {
                  });
     }
 
-    public List<Brewery> getBreweries(Integer[] ids) {
+    public List<Brewery> getBreweries(List<Integer> ids) {
         String joined =
-            Arrays.stream(ids).map(Object::toString).collect(Collectors.joining(","));
+            ids.stream().map(Object::toString).collect(Collectors.joining(","));
 
         return this.query(String.format("SELECT * FROM brewery WHERE id IN (%s)", joined),
                  rs -> {

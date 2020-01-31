@@ -1,5 +1,5 @@
 .PHONY:
-	db test
+	db test tags
 
 db:
 	docker exec -it beerchopper_db_1 /usr/bin/mysql -p123 beerchopper

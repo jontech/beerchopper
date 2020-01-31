@@ -18,24 +18,12 @@ public class TSPSolverTest {
         
         final DataModel data = new DataModel(transMat);
         TSPResult res = TSPSolver.solve(data);
-
-        // Solution cost.
-        logger.info("Objective: " + res.solution.objectiveValue() + "km");
-        // Inspect solution.
-        logger.info("Route:");
-        long routeDistance = 0;
-        String route = "";
-        long index = res.routing.start(0);
-        while (!res.routing.isEnd(index)) {
-            route += res.manager.indexToNode(index) + " -> ";
-            long previousIndex = index;
-            index = res.solution.value(res.routing.nextVar(index));
-            routeDistance += res.routing.getArcCostForVehicle(previousIndex, index, 0);
-        }
-        route += res.manager.indexToNode(res.routing.end(0));
-        logger.info(route);
-        logger.info("Route distance: " + routeDistance + "km");
-
-        assertEquals(16L, routeDistance);
+        List<Long> route= res.getRoute();
+        
+        assertEquals(4, route.size());
+        assertEquals((Long) 1L, route.get(0));
+        assertEquals((Long) 2L, route.get(1));
+        assertEquals((Long) 0L, route.get(2));
+        assertEquals((Long) 1L, route.get(3));
     }
 }
