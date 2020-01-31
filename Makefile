@@ -6,3 +6,6 @@ db:
 
 test:
 	docker-compose run --entrypoint 'gradle -t test' app
+
+tags:
+	find . -name '*.java' | etags -
