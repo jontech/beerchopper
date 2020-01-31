@@ -3,5 +3,7 @@ CREATE TABLE `geo_location` (
   `brewery_id` int(11) DEFAULT NULL,
   `latitude` double DEFAULT NULL,
   `longitude` double DEFAULT NULL,
-  `accuracy` char(100) DEFAULT NULL
+  `accuracy` char(100) DEFAULT NULL,
+  INDEX brew_ind (brewery_id)
 )
+
