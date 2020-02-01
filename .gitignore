@@ -7,4 +7,7 @@ build
 # Ignore side libraries directory
 lib
 
+# Ignore data files
+data
+
 TAGS

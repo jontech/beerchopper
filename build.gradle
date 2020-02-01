@@ -59,6 +59,13 @@ tasks.register("setup") {
         }
     }
     doLast {
+       println "Creating data dir"
+
+       exec {
+            executable 'mkdir'
+            args 'data'
+       }
+       
        println "Getting OR tools"
 
        download 'https://github.com/google/or-tools/releases/download/v7.5/or-tools_ubuntu-18.04_v7.5.7466.tar.gz'
