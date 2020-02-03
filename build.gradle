@@ -64,6 +64,7 @@ tasks.register("setup") {
        exec {
             executable 'mkdir'
             args 'data'
+            ignoreExitValue true
        }
        
        println "Getting OR tools"
@@ -82,6 +83,7 @@ tasks.register("setup") {
        
        download 'https://raw.githubusercontent.com/brewdega/open-beer-database-dumps/master/dumps/geocodes.csv'
        download 'https://raw.githubusercontent.com/brewdega/open-beer-database-dumps/master/dumps/breweries.csv'
+       download 'https://raw.githubusercontent.com/brewdega/open-beer-database-dumps/master/dumps/beers.csv'
 
        println "Done."
     }
