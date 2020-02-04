@@ -1,6 +1,5 @@
 package project;
 
-import java.sql.SQLException;
 import java.util.function.Function;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,21 +10,22 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringBootApplication
 public class App {
     private static final Logger logger = Logger.getLogger(App.class.getName());
     
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
+
+    @Autowired private DB db;
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-            DB db = new DB("jdbc:mysql://db/beerchopper?user=root&password=123");
-
-            final List<GeoLocation> geoLocations = db.getGeoLocations();
+            final List<GeoLocation> geoLocations = this.db.getGeoLocations();
             final DataModel data = new DataModel(geoLocations);
             final TSPResult res = TSPSolver.solve(data);
 
