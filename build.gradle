@@ -51,6 +51,7 @@ application {
 
 test {
     systemProperty 'java.library.path', 'lib'
+    useJUnitPlatform()
 }
 
 flyway {
