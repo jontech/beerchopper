@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class TSPResult {
-    public RoutingModel routing = null;
-    public RoutingIndexManager manager = null;
-    public Assignment solution = null;
+    public RoutingModel routing;
+    public RoutingIndexManager manager;
+    public Assignment solution;
 
     public TSPResult(RoutingModel routing, RoutingIndexManager manager, Assignment solution) {
         this.routing = routing;

@@ -7,19 +7,19 @@ import java.util.List;
 class DataModel {
     public final int vehicleNumber = 1;
     public final int depot = 0;
-    public final int[] starts = {1};
-    public final int[] ends = {1};
-    public Long[][] transMat = null;
+    public final int[] starts = {0};
+    public final int[] ends = {0};
+    public int[][] transMat = null;
     
     public DataModel(List<GeoLocation> geoLocations) {
         this.transMat = this.makeTransitionMatrix(geoLocations, this.getDistFunction());        
     }
 
-    public DataModel(Long[][] transMat) {
+    public DataModel(int[][] transMat) {
         this.transMat = transMat;
     }
 
-    public static Function<Double[], Function<Double[], Long>> getDistFunction() {
+    public static Function<Double[], Function<Double[], Integer>> getDistFunction() {
         return pointA -> pointB -> {
             Function<Double, Double> toRad = a -> a * Math.PI / 180;
             final int R = 6371; // Radious of the earth
@@ -32,14 +32,14 @@ class DataModel {
                 * Math.sin(lonDistance / 2)
                 * Math.sin(lonDistance / 2);
             Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return Double.valueOf(R * c).longValue();
+            return (int)(R * c);
         };
     }
 
-    public static Long[][] makeTransitionMatrix(List<GeoLocation> geoLocations,
-                                                Function<Double[], Function<Double[], Long>> distFn) {
+    public static int[][] makeTransitionMatrix(List<GeoLocation> geoLocations,
+                                               Function<Double[], Function<Double[], Integer>> distFn) {
         int n = geoLocations.size();
-        Long[][] mat = new Long[n][n];
+        int[][] mat = new int[n][n];
         for (int i=0; i < n; i++) {
             for (int j=0; j < n; j++) {
                 mat[i][j] = distFn
