@@ -1,11 +1,13 @@
 package project;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
+@SpringBootTest(classes = Config.class)
 public class DataModelTest {
     @Test public void testBuildTransitionMatrix() {
         List<GeoLocation> geoLocations =
@@ -13,11 +15,11 @@ public class DataModelTest {
                           new GeoLocation(2, 37.782501220703125, -122.39299774169922),
                           new GeoLocation(3, 50.76679992675781, 4.30810022354126));
 
-        Long[][] transMat = DataModel.makeTransitionMatrix(geoLocations, pointA -> pointB -> 1L);
+        int[][] transMat = DataModel.makeTransitionMatrix(geoLocations, pointA -> pointB -> 1);
 
         assertEquals(3, transMat.length);
         assertEquals(3, transMat[0].length);
-        assertEquals(1L, transMat[0][0], 0);
+        assertEquals(1, transMat[0][0]);
     }
 
     @Test public void testGeoLocationDistance() {

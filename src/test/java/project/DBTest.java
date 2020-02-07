@@ -1,17 +1,15 @@
 package project;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Arrays;
 import java.sql.SQLException;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.junit.runner.RunWith;
 
-@RunWith(SpringRunner.class)
-public class DBTest {
+ @SpringBootTest(classes = Config.class)
+ public class DBTest {
     @Autowired private DB db;
 
     @Test public void testGetGeoLocations() throws SQLException {
