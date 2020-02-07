@@ -8,7 +8,7 @@ services:
     volumes:
     - .:/home/gradle/project
     working_dir: /home/gradle/project
-    command: gradle run
+    command: gradle -t test
 
   db:
     image: mysql
