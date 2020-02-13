@@ -1,6 +1,7 @@
 package project;
 
 import org.junit.jupiter.api.Test;
+import com.google.ortools.constraintsolver.RoutingModel;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class TSPSolverTest {
         
         final DataModel data = new DataModel(transMat);
         TSPResult res = TSPSolver.solve(data);
+
+        assertEquals(RoutingModel.ROUTING_SUCCESS, res.routing.status());
+
         List<Long> route= res.getRoute();
 
         List<Long> routeExpected =

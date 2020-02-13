@@ -19,15 +19,15 @@ class TSPResult {
 
     public List<Long> getRoute() {
         List<Long> route = new ArrayList<>();
-        long index = this.routing.start(0);
-
-        while (!this.routing.isEnd(index)) {
-            route.add(index);
-            index = this.solution.value(this.routing.nextVar(index));
+        if (this.routing.status() == RoutingModel.ROUTING_SUCCESS) {
+            long index = this.routing.start(0);
+            while (!this.routing.isEnd(index)) {
+                route.add(index);
+                index = this.solution.value(this.routing.nextVar(index));
+            }
+            long lastIndex = this.manager.indexToNode(this.routing.end(0));
+            route.add(lastIndex);
         }
-        long lastIndex = this.manager.indexToNode(this.routing.end(0));
-        route.add(lastIndex);
-
         return route;
     }
 }
