@@ -14,4 +14,4 @@ tags:
 	find . -name '*.java' | etags -
 
 devel:
-	docker-compose --no-ansi up
+	docker-compose --no-ansi up app
