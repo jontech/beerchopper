@@ -25,14 +25,28 @@ class TSPSolver {
                     return data.transMat[fromNode][toNode];
                 });
 
+        // routing costs
         routing.setArcCostEvaluatorOfAllVehicles(transitCallbackIndex);
 
+        // distance constraint
+        routing.addDimension(transitCallbackIndex,
+                             0,    // null capacity slack
+                             2000, // vehicle maximum capacities
+                             true, // start cumul to zero
+                             "Capacity");
+        int penalty = data.distPenalty();
+        for (int i = 1; i < data.transMat.length; ++i) {
+            routing.addDisjunction(new long[] {manager.nodeToIndex(i)}, penalty);
+        }
+
+        // search params
         RoutingSearchParameters searchParameters =
             main.defaultRoutingSearchParameters()
             .toBuilder()
             .setFirstSolutionStrategy(FirstSolutionStrategy.Value.PATH_CHEAPEST_ARC)
             .build();
 
+        // solve
         Assignment solution =  routing.solveWithParameters(searchParameters);
 
         return new TSPResult(routing, manager, solution);

@@ -38,7 +38,7 @@ public class TSPSolverTest {
         List<Long> route= res.getRoute();
 
         List<Long> routeExpected =
-            Arrays.asList(0L, 7L, 2L, 3L, 4L, 12L, 6L, 8L, 1L, 11L, 10L, 5L, 9L, 0L);
+            Arrays.asList(0L, 7L, 2L, 0L);
         assertEquals(routeExpected, route);
     }
 }
