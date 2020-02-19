@@ -55,7 +55,6 @@ class DataModel {
         int n = this.transMat.length;
         int penalty = 0;
         for (int i=1; i < n; i++) {
-            System.out.println("---");
             for (int j=i+1; j < n; j++) {
                 penalty += this.transMat[i][j];
             }
