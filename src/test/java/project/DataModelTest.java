@@ -30,4 +30,17 @@ public class DataModelTest {
 
         assertEquals(2411, res, 0);
     }
+
+    @Test public void testDistancePenalty() {
+        final int[][] transMat = {
+           {0, 2, 2, 4, 1},
+           {2, 0, 3, 6, 4},
+           {2, 3, 0, 3, 3},
+           {4, 6, 3, 0, 4},
+           {1, 4, 3, 4, 0}
+        };
+        DataModel data = new DataModel(transMat);
+
+        assertEquals(23, data.distPenalty());
+    }
 }

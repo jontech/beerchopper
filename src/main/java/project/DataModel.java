@@ -49,4 +49,17 @@ class DataModel {
         }
         return mat;
     }
+
+    // Sum distances after diagonal in transition matrix
+    public int distPenalty() {
+        int n = this.transMat.length;
+        int penalty = 0;
+        for (int i=1; i < n; i++) {
+            System.out.println("---");
+            for (int j=i+1; j < n; j++) {
+                penalty += this.transMat[i][j];
+            }
+        }
+        return penalty;
+    }
 }
