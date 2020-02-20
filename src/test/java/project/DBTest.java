@@ -13,7 +13,8 @@ import java.sql.SQLException;
     @Autowired private DB db;
 
     @Test public void testGetGeoLocations() throws SQLException {
-        List<GeoLocation> geoLocations = this.db.getGeoLocations();
+        List<GeoLocation> geoLocations =
+            this.db.getGeoLocations(32.891998291015625, -117.14399719238281);
 
         assertEquals(1304, geoLocations.size());
     }

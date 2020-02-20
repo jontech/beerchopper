@@ -25,7 +25,8 @@ public class App {
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-            final List<GeoLocation> geoLocations = this.db.getGeoLocations();
+            final List<GeoLocation> geoLocations =
+                this.db.getGeoLocations(32.891998291015625, -117.14399719238281);
             final DataModel data = new DataModel(geoLocations);
             final TSPResult res = TSPSolver.solve(data);
 

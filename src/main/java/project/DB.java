@@ -21,17 +21,26 @@ class DB {
         this.conn = DriverManager.getConnection(url);
     }
 
-    public List<GeoLocation> getGeoLocations() {
-        return this.query("SELECT * FROM geo_location",
-                 rs -> {
-                     try {
-                         return new GeoLocation(rs.getInt("id"),
-                                                Double.parseDouble(rs.getString("latitude")), 
-                                                Double.parseDouble(rs.getString("longitude")));
-                     } catch (SQLException e) {
-                         throw new RuntimeException(e);
-                     }
-                 });
+    public List<GeoLocation> getGeoLocations(Double lat, Double lon) {
+        return this.query(String.format("SELECT id, latitude, longitude,\n"
+                                        + "(6371 * acos(\n"
+                                        + "  cos( radians(%s) ) \n"
+                                        + "  * cos( radians(%s) ) \n"
+                                        + "  * cos( radians(longitude) - radians(%s) ) \n"
+                                        + "  + sin( radians(%s) ) \n"
+                                        + "  * sin( radians(latitude) ) \n"
+                                        + ")) AS dist \n"
+                                        + "FROM geo_location\n"
+                                        + "HAVING dist < 1000", lat, lat, lon, lat),
+                          rs -> {
+                              try {
+                                  return new GeoLocation(rs.getInt("id"),
+                                                         Double.parseDouble(rs.getString("latitude")), 
+                                                         Double.parseDouble(rs.getString("longitude")));
+                              } catch (SQLException e) {
+                                  throw new RuntimeException(e);
+                              }
+                          });
     }
 
     public List<Brewery> getBreweries(List<Integer> ids) {
