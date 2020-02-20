@@ -34,7 +34,7 @@ class TSPSolver {
                              2000, // vehicle maximum capacities
                              true, // start cumul to zero
                              "Capacity");
-        int penalty = data.distPenalty();
+        int penalty = data.getPenalty();
         for (int i = 1; i < data.transMat.length; ++i) {
             routing.addDisjunction(new long[] {manager.nodeToIndex(i)}, penalty);
         }

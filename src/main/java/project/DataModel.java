@@ -50,13 +50,21 @@ class DataModel {
         return mat;
     }
 
+    public int getPenalty() {
+        Function<Integer, Function<Integer, Integer>> penaltyFn = i -> j -> {
+            int dist = this.transMat[i][j];
+            return dist;
+        };
+        return this.calcPenalty(penaltyFn);
+    }
+    
     // Sum distances after diagonal in transition matrix
-    public int distPenalty() {
+    public int calcPenalty(Function<Integer, Function<Integer, Integer>> penaltyFn) {
         int n = this.transMat.length;
         int penalty = 0;
         for (int i=1; i < n; i++) {
             for (int j=i+1; j < n; j++) {
-                penalty += this.transMat[i][j];
+                penalty += penaltyFn.apply(i).apply(j);
             }
         }
         return penalty;

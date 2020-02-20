@@ -41,6 +41,6 @@ public class DataModelTest {
         };
         DataModel data = new DataModel(transMat);
 
-        assertEquals(23, data.distPenalty());
+        assertEquals(23, data.getPenalty());
     }
 }
