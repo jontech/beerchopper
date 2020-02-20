@@ -52,6 +52,10 @@ application {
 test {
     systemProperty 'java.library.path', 'lib'
     useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
 
 flyway {
