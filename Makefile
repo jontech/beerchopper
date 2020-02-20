@@ -14,4 +14,4 @@ tags:
 	find . -name '*.java' | etags -
 
 devel:
-	docker-compose --no-ansi up app
+	docker-compose run --entrypoint 'gradle -t run' app

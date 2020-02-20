@@ -30,4 +30,17 @@ class TSPResult {
         }
         return route;
     }
+
+    public long getDistance() {
+        long routeDistance = 0;
+        if (this.routing.status() == RoutingModel.ROUTING_SUCCESS) {
+            long index = routing.start(0);
+            while (!routing.isEnd(index)) {
+                long previousIndex = index;
+                index = solution.value(routing.nextVar(index));
+                routeDistance += routing.getArcCostForVehicle(previousIndex, index, 0);
+            }
+        }
+        return routeDistance;
+    }
 }

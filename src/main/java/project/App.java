@@ -29,20 +29,26 @@ public class App {
                 this.db.getGeoLocations(32.891998291015625, -117.14399719238281);
             final DataModel data = new DataModel(geoLocations);
             final TSPResult res = TSPSolver.solve(data);
+            
+            logger.info("Roundtrip:");
 
             List<Integer> ids = res
                 .getRoute()
                 .stream()
                 .map(i -> geoLocations.get(i.intValue()).id)
                 .collect(Collectors.toList());
-
             List<Brewery> breweries = db.getBreweries(ids);
-            printVisitedBreweries(breweries);
+
+            String joined = breweries.stream()
+                .map(b -> String.format("%s (%s)", b.name, b.id))
+                .collect(Collectors.joining("\n\t-> "));
+
+            logger.info(joined);
+            
+            logger.info("Total breweries: " + geoLocations.size());
+            logger.info("Found breweries: " + breweries.size());
+            logger.info("Objective: " + res.solution.objectiveValue() + " km");
+            logger.info("Route distance: " + res.getDistance() + " km");
         };
-    }
-      
-    public static void printVisitedBreweries(List<Brewery> breweries) {
-        String joined = breweries.stream().map(b -> b.name).collect(Collectors.joining(" -> "));
-        logger.info(joined);
     }
 }
