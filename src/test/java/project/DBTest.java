@@ -16,7 +16,7 @@ import java.sql.SQLException;
         List<GeoLocation> geoLocations =
             this.db.getGeoLocations(32.891998291015625, -117.14399719238281);
 
-        assertEquals(1304, geoLocations.size());
+        assertEquals(73, geoLocations.size());
     }
 
     @Test public void testGetBreweriesByIds() throws SQLException {
