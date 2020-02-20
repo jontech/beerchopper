@@ -58,6 +58,20 @@ class DB {
                      }
                  });
     }
+
+    public List<BeerKind> getBreweriesBeerKinds(List<Integer> breweryIds) {
+        String joined =
+            breweryIds.stream().map(Object::toString).collect(Collectors.joining(","));
+        return this.query(String.format("SELECT * FROM beer WHERE brewery_id IN (%s)", joined),
+                          rs -> {
+                              try {
+                                  return new BeerKind(rs.getInt("id"),
+                                                      rs.getString("name"));
+                              } catch (SQLException e) {
+                                  throw new RuntimeException(e);
+                              }
+                          });
+    }
     
     private <T> List<T> query(String q, Function<ResultSet, T> unpackFn) {
         Statement stmt = null;
