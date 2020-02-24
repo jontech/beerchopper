@@ -84,17 +84,21 @@ class DB {
                 result.add(unpackFn.apply(rs));
             }
         } catch (SQLException e ) {
-            logger.info(e.getMessage());
+            logger.severe(e.getMessage());
         } finally {
             if (rs != null) {
                 try {
                     rs.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException e) {
+                    logger.warning(e.getMessage());
+                }
             }
             if (stmt != null) {
                 try {
                     stmt.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException e) {
+                    logger.warning(e.getMessage());
+                }
             }
         }
         
