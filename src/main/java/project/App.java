@@ -30,25 +30,39 @@ public class App {
             final DataModel data = new DataModel(geoLocations);
             final TSPResult res = TSPSolver.solve(data);
             
-            logger.info("Roundtrip:");
-
             List<Integer> ids = res
                 .getRoute()
                 .stream()
                 .map(i -> geoLocations.get(i.intValue()).id)
                 .collect(Collectors.toList());
-            List<Brewery> breweries = db.getBreweries(ids);
 
-            String joined = breweries.stream()
-                .map(b -> String.format("%s (%s)", b.name, b.id))
-                .collect(Collectors.joining("\n\t-> "));
+            List<Brewery> breweries = this.db.getBreweries(ids);
+            logger.info("Roundtrip:");
+            logger.info(this.breweryRoundtrip(breweries));
 
-            logger.info(joined);
+            List<BeerKind> beerKinds = this.db.getBreweriesBeerKinds(ids);
+            logger.info("Beverage kinds collected:");
+            logger.info(this.beerKindsCollected(beerKinds));
             
             logger.info("Total breweries: " + geoLocations.size());
-            logger.info("Found breweries: " + breweries.size());
+            logger.info("Visited breweries: " + breweries.size());
+            logger.info("Beer kinds collected: " + beerKinds.size());
             logger.info("Objective: " + res.solution.objectiveValue() + " km");
             logger.info("Route distance: " + res.getDistance() + " km");
         };
+    }
+
+    private String breweryRoundtrip(List<Brewery> breweries) {
+        String joined = breweries.stream()
+            .map(b -> String.format("%s (%s)", b.name, b.id))
+            .collect(Collectors.joining("\n\t-> "));
+        return joined;
+    }
+
+    private String beerKindsCollected(List<BeerKind> beerKinds) {
+        String joined = beerKinds.stream()
+            .map(b -> String.format("%s (%s)", b.name, b.id))
+            .collect(Collectors.joining("\n\t"));
+        return joined;
     }
 }
