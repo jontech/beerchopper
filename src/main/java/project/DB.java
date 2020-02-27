@@ -31,7 +31,8 @@ class DB {
                                         + "  * sin( radians(latitude) ) \n"
                                         + ")) AS dist \n"
                                         + "FROM geo_location\n"
-                                        + "HAVING dist < 1000", lat, lat, lon, lat),
+                                        + "HAVING dist < 1000\n"
+                                        + "ORDER BY dist", lat, lat, lon, lat),
                           rs -> {
                               try {
                                   return new GeoLocation(rs.getInt("id"),
