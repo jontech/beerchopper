@@ -15,7 +15,7 @@ public class DataModelTest {
                           new GeoLocation(2, 37.782501220703125, -122.39299774169922),
                           new GeoLocation(3, 50.76679992675781, 4.30810022354126));
 
-        int[][] transMat = DataModel.makeTransitionMatrix(geoLocations, pointA -> pointB -> 1);
+        int[][] transMat = DataModel.makeTransitionMatrix(geoLocations, (pointA, pointB) -> 1);
 
         assertEquals(3, transMat.length);
         assertEquals(3, transMat[0].length);
@@ -26,7 +26,7 @@ public class DataModelTest {
         Double[] pointA = {30.223400115966797, -97.76969909667969};
         Double[] pointB = {37.782501220703125, -122.39299774169922};
 
-        long res = DataModel.getDistFunction().apply(pointA).apply(pointB);
+        long res = DataModel.getDistFn().apply(pointA, pointB);
 
         assertEquals(2411, res, 0);
     }
@@ -41,6 +41,6 @@ public class DataModelTest {
         };
         DataModel data = new DataModel(transMat);
 
-        assertEquals(23, data.getPenalty());
+        assertEquals(23, data.distPenalty);
     }
 }
